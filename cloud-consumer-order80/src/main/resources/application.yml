@@ -4,8 +4,14 @@ spring:
   application:
     name: cloud-order-service
   cloud:
-    zookeeper:
-      connect-string: localhost:2181
+#    zookeeper:
+#      connect-string: localhost:2181
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        hostname: localhost
+        service-name: ${spring.application.name}
 
 #eureka:
 #  client:
