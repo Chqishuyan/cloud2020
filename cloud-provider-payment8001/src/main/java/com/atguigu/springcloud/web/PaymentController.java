@@ -1,5 +1,6 @@
 package com.atguigu.springcloud.web;
 
+import com.atguigu.spring.cloud.constants.FeignUrlConstants;
 import com.atguigu.springcloud.entity.CommonResult;
 import com.atguigu.springcloud.entity.Payment;
 import com.atguigu.springcloud.service.PaymentService;
@@ -41,7 +42,8 @@ public class PaymentController {
         }
     }
 
-    @GetMapping(value = "/payment/get/{id}")
+    //@GetMapping(value = "/payment/get/{id}")
+    @GetMapping(value = FeignUrlConstants.PAYMENT_GET)
     public CommonResult getById(@PathVariable("id") Long id){
         Payment payment = paymentService.findPaymentById(id);
         if(payment != null){

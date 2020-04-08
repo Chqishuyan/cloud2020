@@ -1,5 +1,6 @@
 package com.atguigu.springcloud.web;
 
+import com.atguigu.springcloud.feignService.FeignPaymentService;
 import com.atguigu.springcloud.entity.CommonResult;
 import com.atguigu.springcloud.entity.Payment;
 import com.atguigu.springcloud.loanBalancer.ILoadBalancer;
@@ -38,6 +39,9 @@ public class OrderController {
     @Autowired
     private ILoadBalancer loadBalancer;
 
+    @Resource
+    private FeignPaymentService feignPaymentService;
+
     @PostMapping(value = "/order/create")
     public CommonResult create(Payment payment){
         log.info("******* create payment={}",payment);
@@ -48,8 +52,9 @@ public class OrderController {
     @GetMapping(value = "/order/get/{id}")
     public CommonResult getById(@PathVariable("id")Long id){
         log.info("****** getById id={}",id);
+        return feignPaymentService.get(id);
         //return restTemplate.getForObject(payment_eureka_url+"/payment/get/"+id, CommonResult.class);
-        return restTemplate.getForObject(payment_consul_url +"/payment/get/"+id, CommonResult.class);
+        //return restTemplate.getForObject(payment_consul_url +"/payment/get/"+id, CommonResult.class);
     }
 
     @GetMapping(value = "/order/lb")

@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * @author shuyan.qi
@@ -13,7 +14,8 @@ import org.springframework.cloud.netflix.ribbon.RibbonClient;
 @SpringBootApplication
 //@EnableEurekaClient
 @EnableDiscoveryClient
-@RibbonClient(name = "cloud-payment-service",configuration = MyLoanBalancerRule.class)
+@EnableFeignClients
+//@RibbonClient(name = "cloud-payment-service",configuration = MyLoanBalancerRule.class)
 public class CloudConsumerOrderMain80 {
     public static void main(String[] args) {
         SpringApplication.run(CloudConsumerOrderMain80.class, args);
