@@ -2,7 +2,12 @@ package com.atguigu.springcloud.web;
 
 import com.atguigu.springcloud.entity.CommonResult;
 import com.atguigu.springcloud.entity.Payment;
+import com.atguigu.springcloud.loanBalancer.ILoadBalancer;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author shuyan.qi
@@ -26,6 +32,12 @@ public class OrderController {
     @Resource
     private RestTemplate restTemplate;
 
+    @Resource
+    private DiscoveryClient discoveryClient;
+    @Qualifier("myILoadBalancer")
+    @Autowired
+    private ILoadBalancer loadBalancer;
+
     @PostMapping(value = "/order/create")
     public CommonResult create(Payment payment){
         log.info("******* create payment={}",payment);
@@ -38,5 +50,12 @@ public class OrderController {
         log.info("****** getById id={}",id);
         //return restTemplate.getForObject(payment_eureka_url+"/payment/get/"+id, CommonResult.class);
         return restTemplate.getForObject(payment_consul_url +"/payment/get/"+id, CommonResult.class);
+    }
+
+    @GetMapping(value = "/order/lb")
+    public ServiceInstance loanBalance(){
+        List<ServiceInstance> instances = discoveryClient.getInstances("cloud-payment-service");
+        ServiceInstance serviceInstance = loadBalancer.instances(instances);
+        return serviceInstance;
     }
 }

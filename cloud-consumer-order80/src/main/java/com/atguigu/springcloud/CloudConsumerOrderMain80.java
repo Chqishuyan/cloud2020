@@ -1,6 +1,6 @@
 package com.atguigu.springcloud;
 
-import com.atguigu.loadBalanceRule.MySelfRule;
+import com.atguigu.loadBalancerRule.MyLoanBalancerRule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -13,7 +13,7 @@ import org.springframework.cloud.netflix.ribbon.RibbonClient;
 @SpringBootApplication
 //@EnableEurekaClient
 @EnableDiscoveryClient
-@RibbonClient(name = "cloud-payment-service",configuration = MySelfRule.class)
+@RibbonClient(name = "cloud-payment-service",configuration = MyLoanBalancerRule.class)
 public class CloudConsumerOrderMain80 {
     public static void main(String[] args) {
         SpringApplication.run(CloudConsumerOrderMain80.class, args);

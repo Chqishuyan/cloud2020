@@ -1,4 +1,4 @@
-package com.atguigu.loadBalanceRule;
+package com.atguigu.loadBalancerRule;
 
 import com.netflix.loadbalancer.IRule;
 import com.netflix.loadbalancer.RandomRule;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2020-04-07 13:05
  */
 @Configuration
-public class MySelfRule {
+public class MyLoanBalancerRule {
 
     @Bean
     public IRule myRule(){
