@@ -45,6 +45,7 @@ public class PaymentController {
     //@GetMapping(value = "/payment/get/{id}")
     @GetMapping(value = FeignUrlConstants.PAYMENT_GET)
     public CommonResult getById(@PathVariable("id") Long id){
+        log.info(FeignUrlConstants.PAYMENT_GET);
         Payment payment = paymentService.findPaymentById(id);
         if(payment != null){
             return new CommonResult(200,"success,serverPort="+serverPort,payment);

@@ -4,6 +4,7 @@ import com.atguigu.spring.cloud.constants.FeignUrlConstants;
 import com.atguigu.springcloud.entity.CommonResult;
 import com.atguigu.springcloud.entity.Payment;
 import com.atguigu.springcloud.service.PaymentService;
+import com.mysql.jdbc.log.LogUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author shuyan.qi
@@ -45,7 +47,13 @@ public class PaymentController {
     //@GetMapping(value = "/payment/get/{id}")
     @GetMapping(value = FeignUrlConstants.PAYMENT_GET)
     public CommonResult getById(@PathVariable("id") Long id){
+        log.info(FeignUrlConstants.PAYMENT_GET);
         Payment payment = paymentService.findPaymentById(id);
+        try {
+            TimeUnit.SECONDS.sleep(2);//演示请求超时
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if(payment != null){
             return new CommonResult(200,"success,serverPort="+serverPort,payment);
         }else{
