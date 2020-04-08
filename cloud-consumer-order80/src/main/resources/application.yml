@@ -23,3 +23,7 @@ spring:
 ribbon:
   MaxAutoRetries: 0 # 同一实例重试次数
   MaxAutoRetriesNextServer: 0 # 不同实例重试次数
+
+logging:
+  level:
+    com.atguigu.springcloud.feignService.FeignPaymentService: debug
