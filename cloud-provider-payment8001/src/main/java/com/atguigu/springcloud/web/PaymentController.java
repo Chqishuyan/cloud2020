@@ -3,11 +3,10 @@ package com.atguigu.springcloud.web;
 import com.atguigu.spring.cloud.constants.FeignUrlConstants;
 import com.atguigu.springcloud.entity.CommonResult;
 import com.atguigu.springcloud.entity.Payment;
+import com.atguigu.springcloud.fallback.DefaultFallBack;
 import com.atguigu.springcloud.service.PaymentService;
-import com.mysql.jdbc.log.LogUtils;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
-import com.sun.imageio.plugins.common.I18N;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
@@ -28,7 +27,7 @@ import java.util.concurrent.TimeUnit;
  */
 @RestController
 @Slf4j
-public class PaymentController {
+public class PaymentController extends DefaultFallBack {
     @Value("${server.port}")
     private Integer serverPort;
 
@@ -107,17 +106,13 @@ public class PaymentController {
 
 
     @GetMapping(value = FeignUrlConstants.PAYMENT_HYSTRIX_ERROR)
-    @HystrixCommand(fallbackMethod = "hystrix_error_rollback",commandProperties = {
+    @HystrixCommand(commandProperties = {
             @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds",value = "3000")
     })
     public String hystrix_error(){
         log.info("hystrix_error");
         int i = 10/0;
         return "hystrix_error";
-    }
-
-    public String hystrix_error_rollback(){
-        return "hystrix异常降级服务...";
     }
 
 }
