@@ -13,4 +13,4 @@ eureka:
       #defaultZone: http://eureka7002.com:7002/eureka # 集群模式，指向另外一个注册中心
   server:
     enable-self-preservation: false # 自我保护机制，默认为true
-    eviction-interval-timer-in-ms: 2000 # 检测服务可用性的时间间隔,单位；毫秒。默认90秒
+    eviction-interval-timer-in-ms: 90000 # 检测服务可用性的时间间隔,单位；毫秒。默认90秒

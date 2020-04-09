@@ -4,6 +4,7 @@ import com.atguigu.loadBalancerRule.MyLoanBalancerRule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
@@ -12,8 +13,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @date 2020-04-05 20:55
  */
 @SpringBootApplication
-//@EnableEurekaClient
-@EnableDiscoveryClient
+@EnableEurekaClient
+//@EnableDiscoveryClient
 @EnableFeignClients
 //@RibbonClient(name = "cloud-payment-service",configuration = MyLoanBalancerRule.class)
 public class CloudConsumerOrderMain80 {

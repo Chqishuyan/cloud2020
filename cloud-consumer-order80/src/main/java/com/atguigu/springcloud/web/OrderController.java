@@ -63,4 +63,22 @@ public class OrderController {
         ServiceInstance serviceInstance = loadBalancer.instances(instances);
         return serviceInstance;
     }
+
+    @GetMapping(value = "/order/hystrix/ok/{id}")
+    public String hystrix_ok(@PathVariable("id")Integer id){
+        log.info("****** hystrix_ok id={}",id);
+        return feignPaymentService.hystrix_ok(id);
+    }
+
+    @GetMapping(value = "/order/hystrix/timeout/{id}")
+    public String hystrix_timeout(@PathVariable("id")Integer id){
+        log.info("****** hystrix_timeout id={}",id);
+        return feignPaymentService.hystrix_timeout(id);
+    }
+
+    @GetMapping(value = "/order/hystrix/error")
+    public String hystrix_error(){
+        log.info("****** hystrix_error");
+        return feignPaymentService.hystrix_error();
+    }
 }

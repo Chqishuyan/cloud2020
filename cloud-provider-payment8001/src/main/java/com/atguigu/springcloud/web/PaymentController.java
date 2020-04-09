@@ -5,6 +5,9 @@ import com.atguigu.springcloud.entity.CommonResult;
 import com.atguigu.springcloud.entity.Payment;
 import com.atguigu.springcloud.service.PaymentService;
 import com.mysql.jdbc.log.LogUtils;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import com.sun.imageio.plugins.common.I18N;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
@@ -76,6 +79,45 @@ public class PaymentController {
             }
         }
         return discoveryClient;
+    }
+
+    @GetMapping(value = FeignUrlConstants.PAYMENT_HYSTRIX_OK)
+    public String hystrix_ok(@PathVariable("id") Integer id){
+        log.info("hystrix_ok id={}",id);
+        return "hystrix_ok";
+    }
+
+    @GetMapping(value = FeignUrlConstants.PAYMENT_HYSTRIX_TIMEOUT)
+    @HystrixCommand(fallbackMethod = "hystrix_timeout_rollback",commandProperties = {
+            @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds",value = "3000")
+    })
+    public String hystrix_timeout(@PathVariable("id") Integer id){
+        log.info("hystrix_timeout");
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "hystrix_timeout";
+    }
+
+    public String hystrix_timeout_rollback(Integer id){
+        return "hystrix超时降级服务...";
+    }
+
+
+    @GetMapping(value = FeignUrlConstants.PAYMENT_HYSTRIX_ERROR)
+    @HystrixCommand(fallbackMethod = "hystrix_error_rollback",commandProperties = {
+            @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds",value = "3000")
+    })
+    public String hystrix_error(){
+        log.info("hystrix_error");
+        int i = 10/0;
+        return "hystrix_error";
+    }
+
+    public String hystrix_error_rollback(){
+        return "hystrix异常降级服务...";
     }
 
 }

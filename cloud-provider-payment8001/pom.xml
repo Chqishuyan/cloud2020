@@ -45,10 +45,10 @@
             <scope>test</scope>
         </dependency>
         <!--eureka-client-->
-        <!--<dependency>
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>-->
+        </dependency>
 
         <!--zookeeper-->
         <!--当节点没有反馈到心跳（有可能是宕机了），zookeeper会直接将该节点去掉，所以zookeeper的服务节点是临时的-->
@@ -71,9 +71,14 @@
         </dependency>-->
 
         <!--consul server-->
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-consul-discovery</artifactId>
+        </dependency>-->
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
         <!--jdbc-->
         <dependency>

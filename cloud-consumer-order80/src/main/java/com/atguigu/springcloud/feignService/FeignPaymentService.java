@@ -12,5 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "cloud-payment-service")
 public interface FeignPaymentService {
     @GetMapping(value = FeignUrlConstants.PAYMENT_GET)
-    public CommonResult<Payment> get(@PathVariable("id") Long id);
+    CommonResult<Payment> get(@PathVariable("id") Long id);
+
+    @GetMapping(value = FeignUrlConstants.PAYMENT_HYSTRIX_OK)
+    String hystrix_ok(@PathVariable("id") Integer id);
+
+    @GetMapping(value = FeignUrlConstants.PAYMENT_HYSTRIX_TIMEOUT)
+    String hystrix_timeout(@PathVariable("id") Integer id);
+
+    @GetMapping(value = FeignUrlConstants.PAYMENT_HYSTRIX_ERROR)
+    String hystrix_error();
 }

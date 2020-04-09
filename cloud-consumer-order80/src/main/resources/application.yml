@@ -6,23 +6,26 @@ spring:
   cloud:
 #    zookeeper:
 #      connect-string: localhost:2181
-    consul:
-      host: localhost
-      port: 8500
-      discovery:
-        hostname: localhost
-        service-name: ${spring.application.name}
+#    consul:
+#      host: localhost
+#      port: 8500
+#      discovery:
+#        hostname: localhost
+#        service-name: ${spring.application.name}
 
-#eureka:
-#  client:
-#    register-with-eureka: true
-#    fetch-registry: true
-#    service-url:
-#      # defaultZone: http://localhost:7001/eureka # 单机版
-#      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka # 集群版
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:7001/eureka # 单机版
+      #defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka # 集群版
 ribbon:
-  MaxAutoRetries: 0 # 同一实例重试次数
-  MaxAutoRetriesNextServer: 0 # 不同实例重试次数
+  ConnectTimeout: 1000 # 连接超时时间,默认1000ms
+  ReadTimeout: 6000 # 等待服务响应超时时间,默认1000ms
+  MaxAutoRetries: 0 # 同一实例重试次数，默认0次
+  MaxAutoRetriesNextServer: 0 # 不同实例重试次数，默认1次
+
 
 logging:
   level:
