@@ -26,7 +26,11 @@ ribbon:
   MaxAutoRetries: 0 # 同一实例重试次数，默认0次
   MaxAutoRetriesNextServer: 0 # 不同实例重试次数，默认1次
 
+feign:
+  hystrix:
+    enabled: true # 开启feign的hystrix路断器
 
 logging:
   level:
     com.atguigu.springcloud.feignService.FeignPaymentService: debug
+

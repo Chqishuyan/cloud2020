@@ -18,6 +18,10 @@ public class CommonResult<T> implements Serializable {
     private String message;
     private T data;
 
+    public static final Integer SUCCESS_CODE = 200;
+    public static final Integer FAIL_CODE = 400;
+    public static final Integer ERROR_CODE = 500;
+
     public CommonResult(Integer code,String message){
         this(code,message,null);
     }
