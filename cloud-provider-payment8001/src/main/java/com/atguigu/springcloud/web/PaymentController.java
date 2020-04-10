@@ -115,4 +115,29 @@ public class PaymentController extends DefaultFallBack {
         return "hystrix_error";
     }
 
+
+
+    //演示服务熔断
+    @HystrixCommand(fallbackMethod = "hystrix_circuitBreaker_fallback",commandProperties = {
+            //配置解释：在10次请求里如果有60%的请求是失败了的，那么就进行熔断(OPEN)。随后每隔10秒尝试接收请求(HALF_OPEN)，直达完全开放(CLOSE)。
+            @HystrixProperty(name = "circuitBreaker.enabled",value = "true"),//是否开启断路器
+            @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold",value = "10"),//请求次数
+            @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds",value = "10000"),//时间窗口期
+            @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage",value = "60"),//失败率达到该值，熔断
+    })
+    @GetMapping(value = FeignUrlConstants.PAYMENT_HYSTRIX_CIRCUIT_BREAKER)
+    public String hystrix_circuitBreaker(@PathVariable("id")Integer id){
+        log.info("hystrix_circuitBreaker id={}",id);
+        if (id < 0){
+            throw new RuntimeException("id不能为负数");
+        }
+        //当熔断发生后，会发现id不小于0的请求也会走向降级
+        return "hystrix_circuitBreaker";
+    }
+
+
+    public String hystrix_circuitBreaker_fallback(Integer id){
+        return "服务熔断-支付系统维护中...";
+    }
+
 }

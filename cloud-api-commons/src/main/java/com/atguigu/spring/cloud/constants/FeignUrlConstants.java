@@ -9,4 +9,5 @@ public class FeignUrlConstants {
     public static final String PAYMENT_HYSTRIX_OK = "/payment/hystrix/ok/{id}";
     public static final String PAYMENT_HYSTRIX_TIMEOUT = "/payment/hystrix/timeout/{id}";
     public static final String PAYMENT_HYSTRIX_ERROR = "/payment/hystrix/error";
+    public static final String PAYMENT_HYSTRIX_CIRCUIT_BREAKER = "/payment/hystrix/cb/{id}";
 }
