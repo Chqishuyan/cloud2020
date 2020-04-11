@@ -4,18 +4,18 @@ server:
 spring:
   application:
     name: cloud-gateway-gateway
-  cloud:
-    gateway:
-      routes:
-        - id: payment-service-1 #路由的ID，自定义，但要求唯一
-          uri: http://localhost:8001 #路由匹配到的访问地址
-          predicates:
-            - Path=/payment/hystrix/ok/** #断言；路径匹配才路由
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: payment-service-1 #路由的ID，自定义，但要求唯一
+#          uri: http://localhost:8001 #路由匹配到的访问地址
+#          predicates:
+#            - Path=/payment/hystrix/ok/** #断言；路径匹配才路由
 
-        - id: payment-service-2 #路由的ID，自定义，但要求唯一
-          uri: http://localhost:8002 #路由匹配到的访问地址
-          predicates:
-            - Path=/payment/get/** #断言；路径匹配才路由
+#        - id: payment-service-2 #路由的ID，自定义，但要求唯一
+#          uri: http://localhost:8002 #路由匹配到的访问地址
+#          predicates:
+#            - Path=/payment/get/** #断言；路径匹配才路由
 
 #eureka:
 #  client:
