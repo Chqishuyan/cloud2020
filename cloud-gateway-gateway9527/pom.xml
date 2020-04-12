@@ -18,10 +18,10 @@
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
         <!--eureka-client-->
-       <!-- <dependency>
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>-->
+        </dependency>
 
         <!-- gateway不要依赖这个-->
        <!-- <dependency>
