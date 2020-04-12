@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -48,7 +49,7 @@ public class PaymentController extends DefaultFallBack {
 
     //@GetMapping(value = "/payment/get/{id}")
     @GetMapping(value = FeignUrlConstants.PAYMENT_GET)
-    public CommonResult getById(@PathVariable("id") Long id){
+    public CommonResult getById(HttpServletRequest request,@PathVariable("id") Long id){
         log.info(FeignUrlConstants.PAYMENT_GET);
         Payment payment = paymentService.findPaymentById(id);
         try {
