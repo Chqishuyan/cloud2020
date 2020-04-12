@@ -15,11 +15,13 @@ spring:
           uri: lb://cloud-payment-service
           predicates:
             - Path=/payment/hystrix/ok/** #断言；路径匹配才路由
+            - Before=2020-04-12T09:22:08.806+08:00[Asia/Shanghai] #早于指定时区的时间点
         - id: payment-service-2 #路由的ID，自定义，但要求唯一
           # uri: http://localhost:8002 #路由匹配到的访问地址
           uri: lb://cloud-payment-service
           predicates:
             - Path=/payment/get/** #断言；路径匹配才路由
+            - After=2020-04-12T09:22:08.806+08:00[Asia/Shanghai] #晚于指定时区的时间点
 
 eureka:
   client:
